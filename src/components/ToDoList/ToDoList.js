@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ToDo from '../ToDo/ToDo';
+import AddNewToDo from '../AddNewToDo/AddNewToDo';
 
 export default function ToDoList() {
   const initialToDos = [
@@ -21,6 +22,7 @@ export default function ToDoList() {
   ];
 
   const [toDos, setToDos] = useState(initialToDos);
+  const nrOfToDos = toDos.length;
 
   function handleComplete(completedToDo) {
     const updatedToDos = toDos.map((todo) => {
@@ -36,8 +38,13 @@ export default function ToDoList() {
     setToDos(toDos.filter((todo) => todo.id !== id));
   }
 
+  function handleAddNewToDo(newToDo) {
+    setToDos([...toDos, newToDo]);
+  }
+
   return (
     <>
+      <AddNewToDo nrOfToDos={nrOfToDos} onAddNewToDo={handleAddNewToDo} />
       {toDos.map((todo) => (
         <ToDo
           key={todo.id}
