@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ToDo from '../ToDo/ToDo';
 import AddNewToDo from '../AddNewToDo/AddNewToDo';
+import { Badge } from 'react-bootstrap';
 
 export default function ToDoList() {
   const initialToDos = [
@@ -23,6 +24,10 @@ export default function ToDoList() {
 
   const [toDos, setToDos] = useState(initialToDos);
   const nrOfToDos = toDos.length;
+  const outstandingToDos = toDos.filter(
+    (todo) => todo.completed === false,
+  ).length;
+  console.log('outstanding todos', outstandingToDos);
 
   function handleComplete(completedToDo) {
     const updatedToDos = toDos.map((todo) => {
@@ -44,6 +49,8 @@ export default function ToDoList() {
 
   return (
     <>
+      <Badge bg="danger">{outstandingToDos}</Badge>
+      <span>outstanding tasks</span>
       <AddNewToDo nrOfToDos={nrOfToDos} onAddNewToDo={handleAddNewToDo} />
       {toDos.map((todo) => (
         <ToDo
