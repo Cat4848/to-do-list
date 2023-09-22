@@ -1,11 +1,11 @@
-import { BsXLg } from 'react-icons/bs';
+import { useState } from 'react';
 import {
   BsCheck2All,
   BsCheckCircleFill,
   BsFillPencilFill,
+  BsXLg,
 } from 'react-icons/bs';
 import { Button, Container, Row, Col } from 'react-bootstrap';
-import { useState } from 'react';
 
 export default function ToDo({ todo, onComplete, onDelete, onEdit }) {
   const [isEditing, setIsEditing] = useState(false);
