@@ -27,7 +27,6 @@ export default function ToDoList() {
   const outstandingToDos = toDos.filter(
     (todo) => todo.completed === false,
   ).length;
-  console.log('outstanding todos', outstandingToDos);
 
   function handleComplete(completedToDo) {
     const updatedToDos = toDos.map((todo) => {
@@ -47,6 +46,16 @@ export default function ToDoList() {
     setToDos([...toDos, newToDo]);
   }
 
+  function handleEdit(editedToDo){
+    const updatedToDos = toDos.map(todo => {
+      if(todo.id === editedToDo.id) {
+        return editedToDo;
+      }
+      return todo
+    })
+    setToDos(updatedToDos);
+  }
+
   return (
     <>
       <Badge bg="danger">{outstandingToDos}</Badge>
@@ -58,6 +67,7 @@ export default function ToDoList() {
           todo={todo}
           onComplete={handleComplete}
           onDelete={handleDelete}
+          onEdit={handleEdit}
         />
       ))}
     </>

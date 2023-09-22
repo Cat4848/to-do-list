@@ -1,9 +1,16 @@
 import { BsXLg } from 'react-icons/bs';
-import { BsCheck2All } from 'react-icons/bs';
-import { BsFillPencilFill } from 'react-icons/bs';
+import {
+  BsCheck2All,
+  BsCheckCircleFill,
+  BsFillPencilFill,
+} from 'react-icons/bs';
 import { Button, Container, Row, Col } from 'react-bootstrap';
+import { useState } from 'react';
 
-export default function ToDo({ todo, onComplete, onDelete }) {
+export default function ToDo({ todo, onComplete, onDelete, onEdit }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [inputValue, setInputValue] = useState(todo.name);
+
   return (
     <Container className="mb-3">
       <Row className="justify-content-md-center">
@@ -15,11 +22,26 @@ export default function ToDo({ todo, onComplete, onDelete }) {
             <BsCheck2All />
           </Button>
         </Col>
-        <Col>{todo.name}</Col>
+        {isEditing ? (
+          <Col>
+            <input
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+          </Col>
+        ) : (
+          <Col>{todo.name}</Col>
+        )}
 
         <Col>
-          <Button>
-            <BsFillPencilFill />
+          <Button
+            variant={isEditing ? 'success' : 'primary'}
+            onClick={() => {
+              onEdit({ ...todo, name: inputValue });
+              setIsEditing(!isEditing);
+            }}
+          >
+            {isEditing ? <BsCheckCircleFill /> : <BsFillPencilFill />}
           </Button>
         </Col>
 
