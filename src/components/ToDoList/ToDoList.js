@@ -25,6 +25,7 @@ export default function ToDoList() {
 
   const [toDos, setToDos] = useState(initialToDos);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isShowOutstanding, setIsShowOutstanding] = useState(false);
   const nrOfToDos = toDos.length;
   const outstandingToDos = toDos.filter(
     (todo) => todo.completed === false,
@@ -62,10 +63,17 @@ export default function ToDoList() {
     setSearchTerm(searchValue);
   }
 
-  const filteredToDos = toDos.filter((todo) => {
-    const searchRegExp = new RegExp(searchTerm, 'gi');
-    return todo.name.search(searchRegExp) >= 0 ? true : false;
-  });
+  const showAll = () => true;
+  const showOutstanding = (todo) => todo.completed === false;
+
+  const outstandingToggle = isShowOutstanding ? showOutstanding : showAll;
+
+  const filteredToDos = toDos
+    .filter((todo) => {
+      const searchRegExp = new RegExp(searchTerm, 'gi');
+      return todo.name.search(searchRegExp) >= 0 ? true : false;
+    })
+    .filter(outstandingToggle);
 
   return (
     <>
@@ -73,6 +81,17 @@ export default function ToDoList() {
       <span>outstanding tasks</span>
       <AddNewToDo nrOfToDos={nrOfToDos} onAddNewToDo={handleAddNewToDo} />
       <SearchBar input={searchTerm} onSearch={handleSearch} />
+
+      <input
+        type={'checkbox'}
+        value={isShowOutstanding}
+        onChange={() => setIsShowOutstanding(!isShowOutstanding)}
+      />
+      {isShowOutstanding ? (
+        <span>show all tasks</span>
+      ) : (
+        <span>show outstanding tasks</span>
+      )}
       {filteredToDos.map((todo) => (
         <ToDo
           key={todo.id}
