@@ -32,10 +32,19 @@ export default function ToDoList() {
     setToDos(updatedToDos);
   }
 
+  function handleDelete(id) {
+    setToDos(toDos.filter((todo) => todo.id !== id));
+  }
+
   return (
     <>
       {toDos.map((todo) => (
-        <ToDo key={todo.id} todo={todo} onComplete={handleComplete} />
+        <ToDo
+          key={todo.id}
+          todo={todo}
+          onComplete={handleComplete}
+          onDelete={handleDelete}
+        />
       ))}
     </>
   );

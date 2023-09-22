@@ -3,7 +3,7 @@ import { BsCheck2All } from 'react-icons/bs';
 import { BsFillPencilFill } from 'react-icons/bs';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 
-export default function ToDo({ todo, onComplete }) {
+export default function ToDo({ todo, onComplete, onDelete }) {
   return (
     <Container className="mb-3">
       <Row className="justify-content-md-center">
@@ -24,7 +24,7 @@ export default function ToDo({ todo, onComplete }) {
         </Col>
 
         <Col>
-          <Button variant="danger">
+          <Button onClick={() => onDelete(todo.id)} variant="danger">
             <BsXLg />
           </Button>
         </Col>
